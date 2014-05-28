@@ -1,0 +1,310 @@
+/* SOURCE ============================================================*/
+
+div.source, div.about
+{
+	padding:20px 60px;
+	background:#fff;
+	color:#203748;
+	font-size:18px;
+	text-align: center;
+	margin:30px 0 0;
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
+	border-radius: 40px;
+}
+
+div.source span.phrase
+{
+	display: block;
+	
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	color: #0088cc;
+	
+	margin: 10px 0;
+}
+
+div.source div.properties
+{
+	display: inline-block;
+	
+	font-size:12px;
+}
+
+div.source div.properties em
+{
+	font-style: normal;
+	font-weight: bold;
+}
+
+div.source div.properties span.lang, div.source div.properties span.time, div.source div.properties span.author, div.source div.properties a.flag
+{
+	display: block;
+	
+	margin-right: 15px;
+	float: left;
+}
+
+/* TRANSLATION =======================================================*/
+
+div.tran
+{
+	padding:5px 10px;
+	color:#fff;
+	font-size:18px;
+	text-align: center;
+	margin:0 50px;
+}
+
+div.tran div.properties
+{
+	display: inline-block;
+	
+	font-size:12px;
+}
+
+div.tran span.phrase
+{
+	display: block;
+	
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	
+	margin: 10px 0;
+}
+
+div.tran div.properties span.time, div.tran div.properties span.author, div.tran div.properties a.flag, div.tran div.properties span.score
+{
+	display: block;
+	
+	margin-right: 15px;
+	float: left;
+}
+
+div.tran div.properties em
+{
+	font-style: normal;
+	font-weight: bold;
+}
+
+/* SEARCH ============================================================*/
+
+div#search
+{
+	padding:0 20%;
+	background: transparent;
+	color:#ffffff;
+	font-size:18px;
+	text-align: center;
+	margin:10px 0 0;
+}
+
+div#search select, div#search textarea, div#search input[type="text"], div#search input[type="password"], div#search input[type="datetime"], div#search input[type="datetime-local"], div#search input[type="date"], div#search input[type="month"], input[type="time"], div#search input[type="week"], div#search input[type="number"], div#search input[type="email"], div#search input[type="url"], div#search input[type="search"], div#search input[type="tel"], div#search input[type="color"], div#search .uneditable-input 
+{
+	margin-bottom: 0;
+	color: #203748;
+}
+
+/* ABOUT =============================================================*/
+
+#logo-about
+{
+	width: 40%;
+	margin: 0 30%;
+}
+
+div.about p
+{
+	margin-top: 10px;
+	color:#203748;
+}
+
+div.about dl {
+	text-align: left;
+}
+div.about dt {
+	float: left;
+	clear: left;
+	width: 100px;
+	text-align: right;
+	font-weight: bold;
+}
+div.about dt:after {
+	content: ":";
+}
+div.about dd {
+	margin: 0 0 0 110px;
+	padding: 0 0 0.5em 0;
+}
+
+/* TRANSLATOR ========================================================*/
+
+div.translator
+{
+	padding:20px 60px;
+	background:#fff;
+	color:#203748;
+	font-size:18px;
+	text-align: center;
+	margin:30px 0 0;
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
+	border-radius: 40px;
+}
+
+div.translator span.name
+{
+	display: block;
+	
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	color: #0088cc;
+	
+	margin: 10px 0;
+}
+
+div.translator span.description
+{
+	display: block;
+	
+	font-size:15px;
+}
+
+div.translator span.from, div.translator span.to
+{
+	display: block;
+}
+
+/* REGISTER ==========================================================*/
+
+div.register-form
+{
+	padding:0 15%;
+	background: transparent;
+	color:#ffffff;
+	font-size:18px;
+	text-align: center;
+	margin:10px 0 0;
+}
+
+div.register-form select, div.register-form textarea, div.register-form input[type="text"], div.register-form input[type="email"], .uneditable-input 
+{
+	margin-bottom: 0;
+	color: #203748;
+}
+
+/* SCORE =============================================================*/
+
+div.score div.tran
+{
+	padding:5px 10px;
+	margin-top: 20px;
+	color:#fff;
+	font-size:18px;
+	text-align: center;
+	width: 30%;
+	
+	border: 2px solid #fff;
+	
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
+	border-radius: 40px;
+	
+	float: left;
+}
+
+div.score div.tran:hover
+{
+	background-color:#0088cc;
+}
+
+div.score div.tran + div.tran
+{
+	float: right;
+}
+
+div.score div.source + span.title
+{
+	display: block;
+	
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+	
+	font-size:18px;
+	margin: 10px 0 0;
+}
+
+div.score div.source span.title
+{
+	display: block;
+	
+	font-size:12px;
+	text-align: center;
+}
+
+/* SETTINGS ==========================================================*/
+div.settings-form
+{
+	padding:0 15%;
+	background: transparent;
+	color:#ffffff;
+	font-size:18px;
+	text-align: center;
+	margin:10px 0 0;
+}
+
+div.settings-form select, div.settings-form textarea, div.settings-form input[type="text"], div.settings-form input[type="email"], .uneditable-input 
+{
+	margin-bottom: 10px;
+	width: 100%;
+	color: #203748;
+	
+	clear: both;
+}
+
+div.settings-form button.btn
+{
+	clear: both;
+}
+
+
+div.settings-form div.languages
+{
+	text-align: left;
+	width: 40%;
+	float:right;
+	margin: 10px 10% 10px 0;
+}
+
+div.settings-form span.title
+{
+	display: block;
+	
+	font-weight: bold;
+	color: #fff;
+	
+	font-size:18px;
+	margin: 10px 0 0;
+}
+
+div.settings-form div.from
+{
+	float: left;
+	margin: 10px 0 10px 10%;
+}
+
+div.settings-form input[type="checkbox"]
+{
+	margin: 10px;
+	display: inline-block;
+}
+
+div.settings-form input[type="checkbox"] + label
+{
+	margin-bottom: 10px;
+	display: inline-block;
+}

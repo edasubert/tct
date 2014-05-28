@@ -1,0 +1,16 @@
+Options +FollowSymLinks
+ 
+RewriteEngine On
+
+RewriteRule ^about/?$ index.php?p=about [L]
+RewriteRule ^phrases/?$ index.php?p=phrases [L,QSA]
+
+RewriteRule ^phrase/[a-z0-9\-]+/([a-f0-9]+)/?$ index.php?p=phrase&hash=$1 [L,QSA]
+RewriteRule ^score/[a-z0-9\-]+/([a-f0-9]+)/?$ index.php?p=score&hash=$1 [L]
+
+RewriteRule ^translator/([0-9]+)/?$ index.php?p=translator&numPage=$1 [L]
+RewriteRule ^translator/profile/([0-9]+)/?$ index.php?p=translator&profile=$1 [L]
+
+RewriteRule ^search/?$ index.php?p=search [L,QSA]
+
+RewriteRule ^score/?$ index.php?p=score [L,QSA]

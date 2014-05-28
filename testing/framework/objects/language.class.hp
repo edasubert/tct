@@ -1,0 +1,43 @@
+<?php
+	if ( ! defined( 'PCAFW' ) ) 
+	{
+		echo 'This file can only be called via the main index.php file, and not directly';
+		exit();
+	}
+
+class language
+{
+	private $registry;
+	private $phrases;
+	
+	public function __construct( &$instance )
+	{
+		$this->registry = $instance;
+	}
+	
+	public get( $lang, $phrase )
+	{
+		if ( isset( $phrases[$lang][$phrase] ) )
+		{
+			return $phrases[$lang][$phrase];
+		}
+		return FALSE;
+	}
+	
+	public add( $lang, $phrase, $translation )
+	{
+		$phrases[$lang][$phrase] = $translation;
+		return TRUE;
+	}
+	
+	public addArray( $lang, $array )
+	{
+		if ( is_array( $array ) )
+		{
+			$phrases[$lang] = $array;
+			return TRUE;
+		}
+		return FALSE;
+	}
+}
+?>

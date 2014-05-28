@@ -7,7 +7,13 @@ class Registry {
 	 * @access private
 	 */
 	private static $objects = array();
-	 
+	
+	/**
+	 * Our array of events
+	 * @access private
+	 */
+	private static $events = array();
+	
 	/**
 	 * Our array of settings
 	 * @access private
@@ -87,7 +93,6 @@ class Registry {
 	public function storeSetting( $data, $key )
 	{
 		self::$settings[ $key ] = $data;
- 
 	}
 	
 	/**
@@ -100,6 +105,65 @@ class Registry {
 		return self::$settings[ $key ];
 	}
 	
+	/**
+	 * Stores an event in the registry
+	 * @param Function $function variable function
+	 * @param String $name the key for the array
+	 * @return void
+	 */
+	public function storeEvent( $function, $name )
+	{
+		if ( !is_callable(  $function ) )
+			trigger_error( 'Event '.$name.' function not callable', E_USER_ERROR );
+			
+			
+		if ( !isset( self::$events[ $name ] ) || !is_array( self::$events[ $name ] ) )
+		{
+			self::$events[ $name ] = array();
+		}
+		
+		array_push( self::$events[ $name ], $function );
+	}
+	
+	/**
+	 * Stores an array of events in the registry
+	 * @param array
+	 * @return void
+	 */
+	public function storeArrayEvent( $array )
+	{
+		if ( !is_callable(  $function ) )
+			trigger_error( 'Event '.$name.' function not callable', E_USER_ERROR );
+			
+			
+		if ( !isset( self::$events[ $name ] ) || !is_array( self::$events[ $name ] ) )
+		{
+			self::$events[ $name ] = array();
+		}
+		
+		array_push( self::$events[ $name ], $function );
+	}
+	
+	/**
+	 * Triggers an event
+	 * @access public
+	 * @param String $name
+	 * @return
+	 */
+	public static function triggerEvent( $name )
+	{
+		if( !isset( self::$instance ) )
+			trigger_error( 'Event trigged before initialization of registry', E_USER_ERROR );
+		
+		if( isset( self::$events[ $name ] ) && is_array( self::$events[ $name ] ) )
+		{
+			foreach( self::$events[ $name ] as $event )
+			{
+				$event( self::$instance );
+			}
+		}
+		
+	}
 }
  
 ?>

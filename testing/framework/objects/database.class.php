@@ -1,5 +1,11 @@
 <?php
 
+	if ( ! defined( 'PCAFW' ) ) 
+	{
+		echo 'This file can only be called via the main index.php file, and not directly';
+		exit();
+	}
+
 class database {
 	 
 	protected $connection;
@@ -171,6 +177,15 @@ class database {
 	public function sanitizeData( $data )
 	{
 		return $this->connection->real_escape_string( $data );
+	}
+	
+	/**
+	 * Get last insert id
+	 * @return int id
+	 */
+	public function insertId()
+	{
+		return $this->connection->insert_id;
 	}
 	 
 	/**
