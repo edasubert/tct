@@ -1,8 +1,51 @@
-\documentstyle[11pt]{article}
+\documentclass[11pt]{article}
 \setlength{\topmargin}{-.5in}
 \setlength{\textheight}{9in}
 \setlength{\oddsidemargin}{.125in}
 \setlength{\textwidth}{6.25in}
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows}
+% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+ 
+% Define block styles  
+\tikzstyle{materia}=[draw, fill=black!10, text width=6.0em, text centered,
+	minimum height=1.5em,drop shadow]
+\tikzstyle{myNode} = [materia, text width=8em, minimum width=10em,
+	minimum height=3em, rounded corners, drop shadow]
+\tikzstyle{texto} = [above, text width=6em, text centered]
+\tikzstyle{linepart} = [draw, thick, color=black!50, -latex', dashed]
+\tikzstyle{line} = [draw, thick, color=black!50, -latex']
+\tikzstyle{ur}=[draw, text centered, minimum height=0.01em]
+ 
+% Define distances for bordering
+\newcommand{\blockdist}{1.3}
+\newcommand{\edgedist}{1.5}
+
+\newcommand{\myNode}[2]{node (p#1) [myNode]
+	{{#2}}}
+
+% Draw background
+\newcommand{\background}[5]{%
+	\begin{pgfonlayer}{background}
+		% Left-top corner of the background rectangle
+		\path (#1.west |- #2.north)+(-0.5,0.5) node (a1) {};
+		% Right-bottom corner of the background rectanle
+		\path (#3.east |- #4.south)+(+0.5,-0.25) node (a2) {};
+		% Draw the background
+		\path[rounded corners, draw=black!50, dashed]
+			(a1) rectangle (a2);
+		\path (a1.east |- a1.south)+(0.8,-0.3) node (u1)[texto]{\scriptsize {#5}};
+	\end{pgfonlayer}}
+
+
+
+
 \begin{document}
 \title{\textbf{Twitter Crowd Translation -- Design and Objectives}}
 \author{
@@ -74,7 +117,7 @@ geographical location of the users having little or no effect on the
 communication, the
 natural obstacle of \emph{languages spoken} remains to fragment the networks.
 
-For stable and long-lasting content, the language barrior is less severe:
+For stable and long-lasting content, the language barrier is less severe:
 examples such as the Wikipedia or its sister project Wiktionary have shown that
 the community of random unpaid volunteers is able to provide translations into
 all possible languages. As the time progresses, an enormous wealth of
@@ -87,11 +130,11 @@ directly forwarded to a number of followers. On the consumption side, everybody
 is flooded with messages from sources he or she selects. Given the constant flow
 of new bits of information, there is little or no point in looking back.
 Whatever messages I missed, I missed; important affairs will reappear as new
-anyway and there is usually not enough time to analyze closed issues. The main
+anyway and there is usually not enough time to analyse closed issues. The main
 value of these networks is the speed in which new issues are noticed and
 reported.
 
-Cracking language barriors for the stable content is feasible and to a large
+Cracking language barriers for the stable content is feasible and to a large
 extent already well achieved: the community provides quality translation and
 (statistical) machine translation (MT) is usually easy to apply on this
 \equo{edited} text.
@@ -103,7 +146,7 @@ communication such as public broadcasting or newspaper remain adequate for these
 occurrences.
 
 The societalXXXover-slovo motivation of our project is to break the language
-barrior for streaming social networks. The technological motivation is to
+barrier for streaming social networks. The technological motivation is to
 significantly advance MT quality by collecting more data and more topical data.
 What Wikipedia and on-line MT services (both commercial and open-source) jointly
 achieved for stable content (MT engines benefiting from community translations
@@ -141,7 +184,52 @@ and not the source channel at all.
 
 \begin{figure}[t]
 \begin{center}
-XXX obrazek
+
+
+\begin{tikzpicture}
+	
+	\path \myNode {1}{\textbf{Author:}\\ phrase};
+	\path (p1.south)+( 0.0,-1.0) \myNode{2}{\textbf{Selector:}\\ \texttt{\#tctrq} phrase};
+	\path (p1.south)+( 5.0,-1.0) \myNode{3}{\texttt{Accept the phrase}};
+	\path (p1.south)+(10.0,-1.0) \myNode{4}{\texttt{Notification to translators}};
+	\path (p3.south)+( 0.0,-1.0) \myNode{5}{\texttt{Machine translation}};
+	\path (p5.south)+( 5.0,-1.0) \myNode{6}{\textbf{Translator:}\\ translation};
+	
+	\path (p5.south)+( 0.0,-1.0) \myNode{7}{\texttt{Accept translations}};
+	\path (p7.south)+( 0.0,-1.5) \myNode{8}{\textbf{Judge:}\\ compares translations};
+	\path (p7.south)+(-5.0,-1.5) \myNode{9}{\texttt{Publish best translation}};
+
+	\path (p9.south)+( 0.0,-1.0) \myNode{10}{\textbf{Recipient}};
+	
+		 
+	% Draw arrows between elements
+	\path [line] (p1.south) -- node [above] {} (p2);
+	
+	\path [line] (p2.east) -- node [above] {} (p3);
+	
+	\path [line] (p3.east) -- node [above] {} (p4);
+	\path [line] (p3.south) -- node [above] {} (p5);
+	
+	\path [line] (p4.south) -- node [above] {} (p6);
+	\path [line] (p5.south) -- node [above] {} (p7);
+	
+	\path [line] (p6.west) -- node [above] {} (p7);
+	
+	\path [line] (p7.south) -- node [above] {} (p8);
+	\path [line] (p8.west) -- node [above] {} (p9);
+	
+	\path [line] (p9.south) -- node [above] {} (p10);
+	
+	\background{p1}{p1}{p10}{p10}{}
+	\path (p1.north) node (u1)[texto]{Twitter};
+	\background{p3}{p1}{p8}{p10}{}
+	\path (p3.north)+(0.0,1.5) node (u2)[texto]{TCT system};
+	\background{p4}{p1}{p6}{p10}{}
+	\path (p4.north)+(0.0,1.5) node (u3)[texto]{Mail};
+	
+\end{tikzpicture}
+
+
 \end{center}
 \caption{Twitter Crowd Translation in a nutshell.}
 \label{schema}
@@ -162,7 +250,7 @@ target language.
 \end{description}
 
 Sometimes, the same person takes several roles in the process of translation of
-one tweet. For instance, Author may already forsee some demand on his tweet and
+one tweet. For instance, Author may already foresee some demand on his tweet and
 may Select it for translation. Selector may coincide with Translator, being a
 person who lives in two communities like a foreign reporter. Translator can also
 Judge the quality of translations; depending on the actual number of 
