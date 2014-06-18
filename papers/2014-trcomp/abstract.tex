@@ -5,26 +5,62 @@
 \setlength{\textwidth}{6.25in}
 \begin{document}
 \title{\textbf{Computer-Aided Translation Backed by Machine Translation}}
-\author{Ond\v{r}ej Odch\'{a}zel and Ond\v{r}ej Bojar\\\\
+\author{Eduard \v{S}ubert and Ond\v{r}ej Bojar\\\\
 Institute of Formal and Applied Linguistics\\
 Faculty of Mathematics and Physics\\
 Charles University, Prague, Czech Republic}
 
-\renewcommand{\today}{June 30, 2009}
+\renewcommand{\today}{June 20, 2014}
 \maketitle
 
 \def\footurl#1{\footnote{\tt{} #1}}
 \def\equo#1{``#1''}
 
-\section {Introduction}
+\def\hashtag#1{\texttt{\##1}}
+
+\section{Introduction}
+
+The aim of our project is to create and maintain corpora for machine translation
+without the need of hiring expensive translators while using the power of crowd
+instead. We achieve this with online interface which allows addition of new
+phrases to corpus their translation as well as evaluation of the best
+translation. Aside from creating the corpus application offers language practice
+and access to foreign content to users.
+
+\section{Our Proposal}
+
+In general there are three steps in work cycle of such application. Addition of
+new phrases their translation and finally their evaluation. Our solution to
+first step is to use social network Twitter. Application periodically scans the
+network for hashtag \hashtag{tctrq} and adds content of such tweets to database.
+Each tweet is required to contain another hashtag with the target language of
+translation. Twitter uses it's own system to determine language of each tweet
+and our application uses this information. 
+
+Second step the translation takes step immediately thereafter. Each of
+registered translators capable of translation between source and target language
+is notified via e-mail and submits translation as a reply e-mail. These replies
+are periodically collected and added to database. At this point machine
+translation from Moses is added to compete with human translators. 
+
+Third step of work cycle the evaluation is the only step that requires user to
+come to our website and use simple interface to vote between two translations.
+Elo rating system is used to evaluate the results. Voting is of course blinded.
+After gaining high enough score the translation is posted back to twitter as a
+response to requester and thus completing the cycle. 
+
+\section{Our solution}
+
+The application is developed with the CakePHP framework. For all e-mail
+communication we use associated Gmail account through IMAP protocol. The Twitter
+integration is done with Simple PHP Wrapper for Twitter through REST API.
 
 \bibliography{biblio}
 \bibliographystyle{plain} 
 
 \paragraph{Moses} - http://www.statmt.org/moses/
-\paragraph{Google Web Toolkit} - http://code.google.com/intl/cs/webtoolkit/
-\paragraph{Google Translator Toolkit} - http://translate.google.com/toolkit/
-\paragraph{OmegaT} - http://www.omegat.org/
-\paragraph{caitra} - http://tool.statmt.org/
+\paragraph{Twitter} - http://twitter.com/
+\paragraph{CakePHP} - http://cakephp.org/
+\paragraph{Simple PHP Wrapper for Twitter API v1.1 calls} - http://github.com/J7mbo/twitter-api-php
 
 \end{document} 
