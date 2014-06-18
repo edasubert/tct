@@ -1,4 +1,8 @@
-abstract.pdf: 
+all: abstract.pdf
+	# Rough estimate of words in the PDF:
+	@pdftotext $< - \
+	| ./skipbetween --inv Introduction References \
+	| wc -w
 
 # %.eps: %.dot
 # 	dot -Tps $< > $@

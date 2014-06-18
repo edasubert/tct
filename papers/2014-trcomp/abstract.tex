@@ -4,7 +4,7 @@
 \setlength{\oddsidemargin}{.125in}
 \setlength{\textwidth}{6.25in}
 \begin{document}
-\title{\textbf{Twitter crowd translation}}
+\title{\textbf{Twitter Crowd Translation -- Design and Objectives}}
 \author{
 Eduard \v{S}ubert\\
 Faculty of Nuclear Sciences and Physical Engineering\\
@@ -24,24 +24,168 @@ Charles University, Prague, Czech Republic
 
 \def\hashtag#1{\texttt{\##1}}
 
+\def\Sref#1{Section~\ref{#1}}
+\def\Fref#1{Figure~\ref{#1}}
+
 %\renewcommand{\today}{June 30, 2009}
 \maketitle
 %
 \section{Introduction}
-The aim of our project is to develop online application for creation and
-maintenance of corpora for machine translation without the need of hiring
-translators while using the power of crowd instead. The application is designed
-to be able to work with any source phrases; however we specialize for
-translation of tweets from popular social network Twitter.
 
+This paper present Twitter Crowd Translation (TCT), our project aimed at
+developing of
+an online infrastructure serving two
+purposes:
+(1) providing online or near-online translation to social media and (2)
+gathering relevant training data to support machine translation of such content.
+We specifically focus on Twitter and the open-source machine translation toolkit
+Moses. We proceed in the spirit of open society and community service as our
+project will rely on unpaid voluntary work.
+
+In \Sref{motiv}, we provide the motivation for both goals of our work.
+% Tohle zatim nemame, ale v plnem clanku by to byt melo:
+%\Sref{chall} briefly lists the challenges specific to machine translation of
+%social media, focusing more on the technical aspects than on the inherent
+%linguistic characteristics concerning style, register etc.
+\Sref{design} describes the overall design of our tool in terms of
+\equo{social engineering} and \Sref{implementation} complements it by the
+technical aspects.
+
+% for creation and
+% maintenance of corpora for machine translation without the need of hiring
+% translators while using the power of crowd instead. The application is designed
+% to be able to work with any source phrases; however we specialize for
+% translation of tweets from popular social network Twitter.
+%
 %The aim of our project is to create and maintain corpora for machine
 %translation without the need of hiring expensive translators while using the
 %power of crowd instead. We achieve this with online interface which allows
 %addition of new phrases to corpus their translation as well as evaluation of
 %the best translation. Aside from creating the corpus application offers
 %language practice and access to foreign content to users.
-%
+
 \section{Motivation}
+\label{motiv}
+
+Since their inception, social networks have gained tremendous popularity and
+they have successfully replaced established means of communication for a wide
+range of circumstances. While the services are being used across the world, with
+geographical location of the users having little or no effect on the
+communication, the
+natural obstacle of \emph{languages spoken} remains to fragment the networks.
+
+For stable and long-lasting content, the language barrior is less severe:
+examples such as the Wikipedia or its sister project Wiktionary have shown that
+the community of random unpaid volunteers is able to provide translations into
+all possible languages. As the time progresses, an enormous wealth of
+information in many languages is accumulated.
+
+On the other hand, many networks are used in a very streaming fashion, Twitter
+being the most prominent example. On the production side, anybody can contribute
+his message, which is
+directly forwarded to a number of followers. On the consumption side, everybody
+is flooded with messages from sources he or she selects. Given the constant flow
+of new bits of information, there is little or no point in looking back.
+Whatever messages I missed, I missed; important affairs will reappear as new
+anyway and there is usually not enough time to analyze closed issues. The main
+value of these networks is the speed in which new issues are noticed and
+reported.
+
+Cracking language barriors for the stable content is feasible and to a large
+extent already well achieved: the community provides quality translation and
+(statistical) machine translation (MT) is usually easy to apply on this
+\equo{edited} text.
+Providing translation to \equo{streaming networks} is much more challenging.
+The input is much noisier, significantly reducing MT output quality, and perhaps
+more importantly, the lag that manual translation would cause reduces the speed
+of delivery, damaging the main value brought by the network. Standard means of
+communication such as public broadcasting or newspaper remain adequate for these
+occurrences.
+
+The societalXXXover-slovo motivation of our project is to break the language
+barrior for streaming social networks. The technological motivation is to
+significantly advance MT quality by collecting more data and more topical data.
+What Wikipedia and on-line MT services (both commercial and open-source) jointly
+achieved for stable content (MT engines benefiting from community translations
+and community benefiting from better MT of prose),
+we would like to sparkleXXXover-slovo for streaming networks and their topical,
+casual and unedited content.
+
+\section{Design of TCT}
+\label{design}
+
+We see two main reasons why people
+contribute translation to community projects: sharing the wealth (\equo{If this
+information (in my language), donated by a random fellow, was useful for me, my
+donation is likely to be useful for someone else.}), and self-promotion
+(\equo{If I contribute, and my contribution is well received, I will gain some
+good reputation with all desirable consequences, including a better position at
+the job market.}).
+We hope that our project can rely on the same principles.
+
+TCT should also be as thin and transparent layer as possible, to cause only
+little disruption to the communication. The primary consequence of this maxim is
+that the main mass of users should stay within their platform -- Twitter in this
+case.
+
+\Fref{schema} summarizes the processes in TCT: a tweet in a foreign language is
+tweeted by someone and observed by a user. The user does not understand the
+message or is not quite certain about its content. Within his Twitter reader,
+the user asks \equo{the ambient intelligence} to have this message translated
+into the language of his choice. Our TCT server notices this request and
+forwards it to human and machine translators. Once sufficiently good
+translations are collected (and human judges can help here as well), the
+translation is tweeted \equo{back} by our server. We put \equo{back} to quotes,
+since technically, some users may prefer to follow only our translated messages
+and not the source channel at all.
+
+\begin{figure}[t]
+\begin{center}
+XXX obrazek
+\end{center}
+\caption{Twitter Crowd Translation in a nutshell.}
+\label{schema}
+\end{figure}
+
+The schema reveal certain roles of humans in the process:
+
+\begin{description}
+\item[Author] is the person that posted the original message.
+\item[Selector] is the Twitter user who decides that a particular tweet is worth
+translating to another language. Selector may or may not understand the source
+language.
+\item[Translator] is a bilingual person, or at least a person that understands
+the given source language is is fluent in the target language.
+\item[Judge] should vaguely understand the source language and be fluent in the
+target language.
+\item[Recipient] is the final reader of the translated tweet.
+\end{description}
+
+Sometimes, the same person takes several roles in the process of translation of
+one tweet. For instance, Author may already forsee some demand on his tweet and
+may Select it for translation. Selector may coincide with Translator, being a
+person who lives in two communities like a foreign reporter. Translator can also
+Judge the quality of translations; depending on the actual number of 
+participants in our system, we may want to avoid people judging their own
+translations.
+
+% XXX Tyhle spojeni roli bychom meli nejak specialne podporovat a usnadnit z
+% uzivatelskeho hlediska.
+
+% XXX melo by tu byt explicitne uvedeno, jak kazdy z ucastniku ze systemu
+% profituje
+
+\section{Technical Aspects of TCT}
+\label{implementation}
+
+ten hashtag
+
+twitter na neco, e-mail na neco jineho
+
+no registration but still hall of fame
+
+MT retraining
+
 There are many successful crowd driven projects online; most notably Wikipedia
 or its sister project Wiktionary. Second example is much more important for our
 project since it shows that users all over the world are eager to translate in
