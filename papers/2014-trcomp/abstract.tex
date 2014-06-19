@@ -75,15 +75,13 @@ Charles University, Prague, Czech Republic
 %
 \section{Introduction}
 
-This paper present Twitter Crowd Translation (TCT), our project aimed at
-developing of
-an online infrastructure serving two
+This paper presents Twitter Crowd Translation (TCT), our project aimed at
+development of an online infrastructure serving two
 purposes:
-(1) providing online or near-online translation to social media and (2)
+(1) providing online translation to social media and (2)
 gathering relevant training data to support machine translation of such content.
-We specifically focus on Twitter and the open-source machine translation toolkit
-Moses. We proceed in the spirit of open society and community service as our
-project will rely on unpaid voluntary work.
+We focus on Twitter and the open-source machine translation toolkit
+Moses. Our project heavily relies on unpaid voluntary work.
 
 In \Sref{motiv}, we provide the motivation for both goals of our work.
 % Tohle zatim nemame, ale v plnem clanku by to byt melo:
@@ -110,79 +108,63 @@ technical aspects.
 \section{Motivation}
 \label{motiv}
 
-Since their inception, social networks have gained tremendous popularity and
-they have successfully replaced established means of communication for a wide
-range of circumstances. While the services are being used across the world, with
-geographical location of the users having little or no effect on the
-communication, the
-natural obstacle of \emph{languages spoken} remains to fragment the networks.
+Social networks have gained tremendous popularity and 
+have successfully replaced many established means of communication. 
+While geographical location of the users has little to no impact on 
+communication, obstacle of \emph{spoken languages} remains.
 
-For stable and long-lasting content, the language barrier is less severe:
-examples such as the Wikipedia or its sister project Wiktionary have shown that
-the community of random unpaid volunteers is able to provide translations into
-all possible languages. As the time progresses, an enormous wealth of
-information in many languages is accumulated.
+For stable and long-lasting content, the problem is less severe:
+services such as the Wikipedia have shown that
+volunteers are able to provide translations into many languages. 
+Machine translation is usually easy to train and apply on such
+content.
 
-On the other hand, many networks are used in a very streaming fashion, Twitter
-being the most prominent example. On the production side, anybody can contribute
-his message, which is
-directly forwarded to a number of followers. On the consumption side, everybody
-is flooded with messages from sources he or she selects. Given the constant flow
-of new bits of information, there is little or no point in looking back.
-Whatever messages I missed, I missed; important affairs will reappear as new
-anyway and there is usually not enough time to analyse closed issues. The main
-value of these networks is the speed in which new issues are noticed and
-reported.
+On the other hand, social networks are used in a streaming fashion, Twitter
+being the most prominent example. Anybody can contribute message, 
+which is forwarded to a number of followers whose feeds are flooded 
+with messages from sources they select. Given the constant flow
+of new information, the expiration of single message is short.
 
-Cracking language barriers for the stable content is feasible and to a large
-extent already well achieved: the community provides quality translation and
-(statistical) machine translation (MT) is usually easy to apply on this
-\equo{edited} text.
 Providing translation to \equo{streaming networks} is much more challenging.
-The input is much noisier, significantly reducing MT output quality, and perhaps
-more importantly, the lag that manual translation would cause reduces the speed
-of delivery, damaging the main value brought by the network. Standard means of
-communication such as public broadcasting or newspaper remain adequate for these
-occurrences.
+The input is much noisier, significantly reducing MT output quality. 
 
-The societalXXXover-slovo motivation of our project is to break the language
+The social motivation of our project is to break the language
 barrier for streaming social networks. The technological motivation is to
-significantly advance MT quality by collecting more data and more topical data.
-What Wikipedia and on-line MT services (both commercial and open-source) jointly
-achieved for stable content (MT engines benefiting from community translations
-and community benefiting from better MT of prose),
-we would like to sparkleXXXover-slovo for streaming networks and their topical,
-casual and unedited content.
+advance MT quality by collecting more data.
+What Wikipedia and on-line MT services gained for stable content,
+we would like to acquire for streaming networks and similar content.
 
 \section{Design of TCT}
 \label{design}
 
-We see two main reasons why people
-contribute translation to community projects: sharing the wealth (\equo{If this
-information (in my language), donated by a random fellow, was useful for me, my
-donation is likely to be useful for someone else.}), and self-promotion
-(\equo{If I contribute, and my contribution is well received, I will gain some
-good reputation with all desirable consequences, including a better position at
-the job market.}).
-We hope that our project can rely on the same principles.
+We see two main reasons for people to 
+contribute to such community project: sharing the information 
+(\equo{What is useful for me, it may be useful for others.}), 
+and self-promotion
+(\equo{I will gain good reputation by contributing well received translations.}).
+We designed our project in accordance to these findings.
 
-TCT should also be as thin and transparent layer as possible, to cause only
-little disruption to the communication. The primary consequence of this maxim is
-that the main mass of users should stay within their platform -- Twitter in this
+TCT should be as thin layer as possible, to cause 
+minimal disruption. The consequence is
+that the majority of users stay within their platform -- Twitter in this
 case.
 
-\Fref{schema} summarizes the processes in TCT: a tweet in a foreign language is
-tweeted by someone and observed by a user. The user does not understand the
-message or is not quite certain about its content. Within his Twitter reader,
-the user asks \equo{the ambient intelligence} to have this message translated
-into the language of his choice. Our TCT server notices this request and
-forwards it to human and machine translators. Once sufficiently good
-translations are collected (and human judges can help here as well), the
-translation is tweeted \equo{back} by our server. We put \equo{back} to quotes,
-since technically, some users may prefer to follow only our translated messages
-and not the source channel at all.
+To better explain the processes of TCT we assign users roles: 
+\textbf{Author}, \textbf{Selector}, \textbf{Translator}, \textbf{Judge} 
+and \textbf{Recipient}.
 
-\begin{figure}[t]
+\Fref{schema} summarizes the work cycle: a tweet in a foreign language is
+tweeted by \textbf{Author} and observed by a \textbf{Selector}. 
+The \textbf{Selector} does not fully understand the message 
+and submits it for translation to the language of his choice. 
+Our TCT server collects this request and
+forwards it to human and machine \textbf{Translators}. Translations 
+are then collected and \textbf{Judges} evaluate their quality. The best
+translation is tweeted to \textbf{Selector} and other \textbf{Recipients} 
+by our server. 
+The same user can takes several roles in the process. 
+
+\begin{figure}[h]
 \begin{center}
 
 
@@ -190,12 +172,12 @@ and not the source channel at all.
 	
 	\path \myNode {1}{\textbf{Author:}\\ phrase};
 	\path (p1.south)+( 0.0,-1.0) \myNode{2}{\textbf{Selector:}\\ \texttt{\#tctrq} phrase};
-	\path (p1.south)+( 5.0,-1.0) \myNode{3}{\texttt{Accept the phrase}};
-	\path (p1.south)+(10.0,-1.0) \myNode{4}{\texttt{Notification to translators}};
+	\path (p1.south)+( 5.0,-1.0) \myNode{3}{\texttt{Collects the message}};
+	\path (p1.south)+(10.0,-1.0) \myNode{4}{\texttt{Notifies the translators}};
 	\path (p3.south)+( 0.0,-1.0) \myNode{5}{\texttt{Machine translation}};
 	\path (p5.south)+( 5.0,-1.0) \myNode{6}{\textbf{Translator:}\\ translation};
 	
-	\path (p5.south)+( 0.0,-1.0) \myNode{7}{\texttt{Accept translations}};
+	\path (p5.south)+( 0.0,-1.0) \myNode{7}{\texttt{Collects translations}};
 	\path (p7.south)+( 0.0,-1.5) \myNode{8}{\textbf{Judge:}\\ compares translations};
 	\path (p7.south)+(-5.0,-1.5) \myNode{9}{\texttt{Publish best translation}};
 
@@ -235,78 +217,31 @@ and not the source channel at all.
 \label{schema}
 \end{figure}
 
-The schema reveal certain roles of humans in the process:
-
-\begin{description}
-\item[Author] is the person that posted the original message.
-\item[Selector] is the Twitter user who decides that a particular tweet is worth
-translating to another language. Selector may or may not understand the source
-language.
-\item[Translator] is a bilingual person, or at least a person that understands
-the given source language is is fluent in the target language.
-\item[Judge] should vaguely understand the source language and be fluent in the
-target language.
-\item[Recipient] is the final reader of the translated tweet.
-\end{description}
-
-Sometimes, the same person takes several roles in the process of translation of
-one tweet. For instance, Author may already foresee some demand on his tweet and
-may Select it for translation. Selector may coincide with Translator, being a
-person who lives in two communities like a foreign reporter. Translator can also
-Judge the quality of translations; depending on the actual number of 
-participants in our system, we may want to avoid people judging their own
-translations.
-
-% XXX Tyhle spojeni roli bychom meli nejak specialne podporovat a usnadnit z
-% uzivatelskeho hlediska.
-
-% XXX melo by tu byt explicitne uvedeno, jak kazdy z ucastniku ze systemu
-% profituje
+We think that each of the user groups profits from using TCT. 
+\textbf{Author} gains bigger audience. 
+\textbf{Selector} achieves full understanding of tweet.
+\textbf{Translator} and \textbf{Judge} practice their language skills 
+and \textbf{Translator} is placed in TCT hall of fame.
+Finally \textbf{Recipient} gains greater understandable content.
 
 \section{Technical Aspects of TCT}
 \label{implementation}
+It is important for us to let users interact with TCT through their platform.
+Therefore \textbf{Selector} submits message as tweet marked with hashtag 
+\hashtag{tctrq} and TCT uses Twitter REST API to search twitter feed
+for such tweets.
 
-ten hashtag
+Once tweets are collected \textbf{Translators} are notified via e-mail
+to which they respond with translation and TCT collects received e-mails.
 
-twitter na neco, e-mail na neco jineho
+\textbf{Judges} are the only group that is required to contribute via 
+TCT website and evaluate the quality of translations by blinded one to one 
+comparison. 
 
-no registration but still hall of fame
-
-MT retraining
-
-There are many successful crowd driven projects online; most notably Wikipedia
-or its sister project Wiktionary. Second example is much more important for our
-project since it shows that users all over the world are eager to translate in
-various languages. (As of \today{ }site claims to have 3,766,260 entries with
-English definitions from over 1400 languages.) This approach could also improve
-role of machine translation in daily communication since it is designed to let
-users translate this type of phrases.
-%
-\section{Our Proposal}
-In general there are three steps in work cycle of such application. Addition of
-new phrases their translation and finally their evaluation. Our solution to
-first step is to use social network Twitter. Application periodically scans the
-network for hashtag \hashtag{tctrq} and adds content of such tweets to database.
-Each tweet is required to contain another hashtag with the target language of
-translation. Twitter uses its own system to determine language of each tweet and
-our application uses this information. 
-
-Second step the translation takes place immediately thereafter. Each of
-registered translators capable of translation between source and target language
-is notified via e-mail and submits translation as a reply e-mail. These replies
-are periodically collected and added to database. At this point machine
-translation from Moses is added to compete with human translators. 
-
-Third step of work cycle the evaluation is the only step that requires user to
-come to our website and use simple interface to vote between two translations.
-Voting is of course blinded. After gaining high enough score the translation is
-posted back to Twitter as a response to request and thus completing the cycle. 
-%
-\section{Our solution}
-The application is developed with the CakePHP framework. For all e-mail
-communication we use associated Gmail account through IMAP protocol. The Twitter
-integration is done with Simple PHP Wrapper for Twitter through REST API.
-%
+Interesting feature is no password registration. 
+Translators are only group required to register but their interaction
+is strictly e-mail based. 
+Necessary settings are accessed by expiring link sent via e-mail on request. 
 
 \section*{References}
 
