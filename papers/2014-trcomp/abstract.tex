@@ -111,55 +111,60 @@ technical aspects.
 Social networks have gained tremendous popularity and 
 have successfully replaced many established means of communication. 
 While geographical location of the users has little to no impact on 
-communication, obstacle of \emph{spoken languages} remains.
+communication, the obstacle of \emph{spoken languages} remains.
+% stejne bych spis rekl: languages spoken
 
 For stable and long-lasting content, the problem is less severe:
 services such as the Wikipedia have shown that
 volunteers are able to provide translations into many languages. 
-Machine translation is usually easy to train and apply on such
-content.
+Machine translation is easy to train on such
+content and delivers moderately good results.
 
 On the other hand, social networks are used in a streaming fashion, Twitter
 being the most prominent example. Anybody can contribute message, 
-which is forwarded to a number of followers whose feeds are flooded 
+which is forwarded to a number of followers. These, in turn, are flooded 
 with messages from sources they select. Given the constant flow
-of new information, the expiration of single message is short.
+of new information, nobody looks back at older messages.
+% the expiration time of a single message is short.
 
 Providing translation to \equo{streaming networks} is much more challenging.
-The input is much noisier, significantly reducing MT output quality. 
+The input is much noisier, significantly reducing MT output quality, and the
+community is less interested in providing manual translations.
 
 The social motivation of our project is to break the language
 barrier for streaming social networks. The technological motivation is to
-advance MT quality by collecting more data.
-What Wikipedia and on-line MT services gained for stable content,
-we would like to acquire for streaming networks and similar content.
+advance MT quality by collecting more and better-fit data.
+What Wikipedia and on-line MT services manage for stable content,
+we would like to achieve for streaming networks and casual, unedited content.
 
 \section{Design of TCT}
 \label{design}
 
 We see two main reasons for people to 
-contribute to such community project: sharing the information 
-(\equo{What is useful for me, it may be useful for others.}), 
+contribute to community translation of Wikipedia and other projects: sharing the information 
+(\equo{What is useful for me in my language may be useful for others.}), 
 and self-promotion
 (\equo{I will gain good reputation by contributing well received translations.}).
 We designed our project in accordance to these findings.
 
 TCT should be as thin layer as possible, to cause 
-minimal disruption. The consequence is
-that the majority of users stay within their platform -- Twitter in this
+minimal disruption. 
+The majority of users stay within their platform -- Twitter in this
 case.
 
-To better explain the processes of TCT we assign users roles: 
+To better explain the processes of TCT, we assign users roles: 
+%We describe the process in terms of roles users take:
 \textbf{Author}, \textbf{Selector}, \textbf{Translator}, \textbf{Judge} 
 and \textbf{Recipient}.
 
-\Fref{schema} summarizes the work cycle: a tweet in a foreign language is
-tweeted by \textbf{Author} and observed by a \textbf{Selector}. 
+\Fref{schema} summarizes the workflow: a tweet in a foreign language is
+posted by \textbf{Author} and observed by a \textbf{Selector}. 
 The \textbf{Selector} does not fully understand the message 
 and submits it for translation to the language of his choice. 
 Our TCT server collects this request and
 forwards it to human and machine \textbf{Translators}. Translations 
-are then collected and \textbf{Judges} evaluate their quality. The best
+are collected and \textbf{Judges} evaluate their quality, high-confidence
+machine translation might bypass this step. The best
 translation is tweeted to \textbf{Selector} and other \textbf{Recipients} 
 by our server. 
 The same user can takes several roles in the process. 
@@ -222,31 +227,33 @@ We think that each of the user groups profits from using TCT.
 \textbf{Selector} achieves full understanding of tweet.
 \textbf{Translator} and \textbf{Judge} practice their language skills 
 and \textbf{Translator} is placed in TCT hall of fame.
-Finally \textbf{Recipient} gains greater understandable content.
+Finally \textbf{Recipient} gains more of understandable content.
 
 \section{Technical Aspects of TCT}
 \label{implementation}
-It is important for us to let users interact with TCT through their platform.
-Therefore \textbf{Selector} submits message as tweet marked with hashtag 
+% It is important for us to let users interact with TCT through their platform.
+%Most users should interact with TCT through their platform.
+To remain in the Twitter platform,
+\textbf{Selector} submits messages as tweets marked with hashtag 
 \hashtag{tctrq} and TCT uses Twitter REST API to search twitter feed
 for such tweets.
 
-Once tweets are collected \textbf{Translators} are notified via e-mail
-to which they respond with translation and TCT collects received e-mails.
+Once tweets are collected, \textbf{Translators} are notified via e-mail
+to which they respond with translations. % and TCT collects received e-mails.
 
-\textbf{Judges} are the only group that is required to contribute via 
-TCT website and evaluate the quality of translations by blinded one to one 
+\textbf{Judges} are %the only group that is
+required to contribute via 
+TCT website and evaluate the quality of translations by blind one-to-one 
 comparison. 
 
-Interesting feature is no password registration. 
-Translators are only group required to register but their interaction
-is strictly e-mail based. 
-Necessary settings are accessed by expiring link sent via e-mail on request. 
+An interesting feature is password-less registration. 
+Translators are the only group required to register but their interaction
+is strictly e-mail based, all necessary settings are accessed by expiring links sent via e-mail on request. 
 
 \section*{References}
 
-\bibliography{biblio}
-\bibliographystyle{plain} 
+% \bibliography{biblio}
+% \bibliographystyle{plain} 
 
 \paragraph{Moses} - http://www.statmt.org/moses/
 \paragraph{Twitter} - http://twitter.com/
